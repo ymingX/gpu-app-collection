@@ -4,6 +4,7 @@ export GPUAPPS_ROOT="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"/../
 export CUDA_PATH=$CUDA_INSTALL_PATH
 
 export CUDA_VERSION=`nvcc --version | grep release | sed -re 's/.*release ([0-9]+\.[0-9]+).*/\1/'`;
+export CUDA_VERSION_INT=$(echo $CUDA_VERSION | sed -re 's/\.//')
 export CUDA_VERSION_MAJOR=`nvcc --version | grep release | sed -re 's/.*release ([0-9]+)\..*/\1/'`;
 export CUDAHOME=$CUDA_INSTALL_PATH
 
@@ -17,65 +18,117 @@ export MAKE_ARGS=""
 export CUDA_CPPFLAGS=""
 export NVCC_ADDITIONAL_ARGS=""
 
-if [ $CUDA_VERSION_MAJOR -eq 4 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 5 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 6 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 7 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 8 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 9 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 10 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_75,code=compute_75"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
-fi
-if [ $CUDA_VERSION_MAJOR -eq 11 ]; then
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_61,code=compute_61"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_75,code=compute_75"
-    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++14"
+# if [ $CUDA_VERSION_MAJOR -eq 4 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 5 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 6 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_10,code=compute_10"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_13,code=compute_13"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 7 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 8 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_20,code=compute_20"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 9 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 10 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_30,code=compute_30"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_35,code=compute_35"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_50,code=compute_50"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_60,code=compute_60"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_62,code=compute_62"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_75,code=compute_75"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++11"
+# fi
+# if [ $CUDA_VERSION_MAJOR -eq 11 ]; then
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_61,code=compute_61"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_70,code=compute_70"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -gencode=arch=compute_75,code=compute_75"
+#     export CUDA_CPPFLAGS="$CUDA_CPPFLAGS -std=c++14"
+# fi
+
+if [ $CUDA_VERSION_INT -ge 128 ];  then
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_52,code=sm_52"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_60,code=sm_60"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_61,code=sm_61"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=sm_70"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_75,code=sm_75"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_80,code=sm_80"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_86,code=sm_86"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_89,code=sm_89"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_90,code=sm_90"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_100,code=sm_100"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_100,code=compute_100"
+elif [ $CUDA_VERSION_INT -ge 118 ] && [ $CUDA_VERSION_INT -le 127 ]; then
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_52,code=sm_52"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_60,code=sm_60"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_61,code=sm_61"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=sm_70"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_75,code=sm_75"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_80,code=sm_80"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_86,code=sm_86"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_89,code=sm_89"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_90,code=sm_90"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_90,code=compute_90"
+elif [ $CUDA_VERSION_INT -ge 110 ] && [ $CUDA_VERSION_INT -le 117 ]; then
+    # do something
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_52,code=sm_52"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_60,code=sm_60"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_61,code=sm_61"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=sm_70"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_75,code=sm_75"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_80,code=sm_80"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_86,code=sm_86"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_86,code=compute_86"
+elif [ $CUDA_VERSION_INT -ge 100 ] && [ $CUDA_VERSION_INT -lt 110 ]; then
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_52,code=sm_52"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_60,code=sm_60"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_61,code=sm_61"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=sm_70"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_75,code=sm_75"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_75,code=compute_75"
+# elif [ $CUDA_VERSION_INT -ge 90 ] && [ $CUDA_VERSION_INT -lt 100 ]; then
+else
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_50,code=sm_50"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_52,code=sm_52"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_60,code=sm_60"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_61,code=sm_61"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=sm_70"
+    export CUDA_CPPFLAGS="$CUDA_CPPFLAGS  -gencode=arch=compute_70,code=compute_70"
+# else
+#     # do something else
 fi
 
 
@@ -133,14 +186,21 @@ if [ $CUDA_VERSION_MAJOR -lt 10 ]; then
     export MAKE_ARGS="$MAKE_ARGS GENCODE_SM75="
 fi
 
-
-# 20 Deprecated in 9+
-if [ $CUDA_VERSION_MAJOR -gt 8 ]; then
-    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM20="
+if [ $CUDA_VERSION_MAJOR -lt 11 ]; then
+    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM80="
+    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM86="
 fi
+
+if [ $CUDA_VERSION_INT -lt 118 ]; then
+    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM89="
+    export MAKE_ARGS="$MAKE_ARGS GENCODE_SM90="
+fi
+
 
 export MAKE_ARGS="$MAKE_ARGS CUBLAS_LIB=cublas_static CUDNN_LIB=cudnn_static"
 export GENCODE_FLAGS=$CUDA_CPPFLAGS
+export CUOPTS=$CUDA_CPPFLAGS
+echo "CUOPTS=$CUOPTS"
 
 export CUDA_CPPFLAGS="$CUDA_CPPFLAGS $NVCC_ADDITIONAL_ARGS"
 echo MAKE_ARGS=$MAKE_ARGS
