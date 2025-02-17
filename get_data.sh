@@ -2,9 +2,10 @@
 export BASH_ROOT="$( cd "$( dirname "$BASH_SOURCE" )" && pwd )"
 DATA_SUBDIR="/data_dirs/"
 DATA_ROOT=$BASH_ROOT$DATA_SUBDIR
-
+echo "BASH_ROOT=$BASH_ROOT"
+echo "PWD=$PWD"
 if [ ! -d $DATA_ROOT ]; then
-	if [ ! -f $BASH_ROOT/all.gpgpu-sim-app-data.tgz ]; then
+	if [ ! -f $BASH_ROOT/all.gpgpu-sim-app-data.tgz ] &&[ ! -f $BASH_ROOT/../all.gpgpu-sim-app-data.tgz ] ; then
 		wget https://engineering.purdue.edu/tgrogers/gpgpu-sim/benchmark_data/all.gpgpu-sim-app-data.tgz
 	fi
     tar xzvf all.gpgpu-sim-app-data.tgz -C $BASH_ROOT
